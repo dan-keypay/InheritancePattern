@@ -1,0 +1,15 @@
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\DataAccess.dll
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\DataAccess.pdb
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\Domain.dll
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\FluentNHibernate.dll
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\Iesi.Collections.dll
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\NHibernate.dll
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\Domain.pdb
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\FluentNHibernate.xml
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\Iesi.Collections.xml
+C:\Projects\InheritancePattern\DataAccess\bin\Debug\NHibernate.xml
+C:\Projects\InheritancePattern\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
+C:\Projects\InheritancePattern\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+C:\Projects\InheritancePattern\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
+C:\Projects\InheritancePattern\DataAccess\obj\Debug\DataAccess.dll
+C:\Projects\InheritancePattern\DataAccess\obj\Debug\DataAccess.pdb

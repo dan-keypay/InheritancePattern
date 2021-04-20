@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p>
+        <a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>
+    </p>
+</div>
+
+<div class="row">
+    <h2>Existing benefit categories</h2>
+    <ul>
+        @foreach (var item in ViewBag.BenefitCategories)
+        {
+            if (item is PrivateMedicalBenefitCategoryModel)
+            {
+                <li>(@item.Id) @item.Name (Amount forgone: @item.AmountForegone) @Html.ActionLink("Delete", "Delete", new { benefitCategoryId = item.Id })</li>
+            }
+            else if (item is CarsAndCarFuelBenefitCategoryModel)
+            {
+                <li>(@item.Id) @item.Name (List price: @item.ListPrice) @Html.ActionLink("Delete", "Delete", new { benefitCategoryId = item.Id })</li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="row">
+    <h2>Existing employee benefit categories</h2>
+    <ul>
+        @foreach (var item in ViewBag.EmployeeBenefitCategories)
+        {
+            if (item is PrivateMedicalEmployeeBenefitCategoryModel)
+            {
+                <li>@item.Name (Amount made good: @item.AmountMadeGood) @Html.ActionLink("Delete", "DeleteEmployee", new { employeeBenefitCategoryId = item.Id })</li>
+            }
+            else if (item is CarEmployeeBenefitCategoryModel)
+            {
+                <li>@item.Name (Fuel?: @item.EmployerProvidesFuel) @Html.ActionLink("Delete", "DeleteEmployee", new { employeeBenefitCategoryId = item.Id })</li>
+            }
+        }
+    </ul>
+</div>
+
+@using InheritancePattern.Models
+@using InheritancePattern.Models.BenefitCategories
+@using InheritancePattern.Models.EmployeeBenefitCategories
+
+<div class="row">
+    <h2 class="col-md-12">System level</h2>
+    <div class="col-md-6">
+        <h3>Add Private medical</h3>
+        @using (Html.BeginForm())
+        {
+            <div id="Editor">
+                <p>Name @Html.TextBox("Name")</p>
+                <p>Amount foregone @Html.TextBox("AmountForegone")</p>
+                <p>
+                    <input type="button" value="Save" id="SavePrivateMedical"/>
+                </p>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <h3>Add Car</h3>
+        @using (Html.BeginForm())
+        {
+            <div id="CarEditor">
+                <p>Name @Html.TextBox("Name")</p>
+                <p>Registration @Html.TextBox("Registration")</p>
+                <p>List price @Html.TextBox("ListPrice")</p>
+                <p>
+                    <input type="button" value="Save" id="SaveCars"/>
+                </p>
+            </div>
+        }
+    </div>
+
+    <h2 class="col-md-12">Employee level</h2>
+    <div class="col-md-6">
+        <h3>Add Private medical</h3>
+        @using (Html.BeginForm())
+        {
+            <div id="EmployeeEditor">
+                <p>
+                    BenefitCategory
+                    <select name="BenefitCategoryId" id="BenefitCategoryId">
+                        @foreach (var item in ViewBag.BenefitCategories)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </p>
+                <p>Amount foregone @Html.TextBox("AmountForegone")</p>
+                <p>Amount made good @Html.TextBox("AmountMadeGood")</p>
+                <p>
+                    <input type="button" value="Save" id="SaveEmployeePrivateMedical"/>
+                </p>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <h3>Add Car</h3>
+        @using (Html.BeginForm())
+        {
+            <div id="EmployeeCarEditor">
+                <p>
+                    BenefitCategory
+                    <select name="BenefitCategoryId" id="BenefitCategoryId">
+                        @foreach (var item in ViewBag.BenefitCategories)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </p>
+                <p>Available from date <input type="date" name="AvailableFromDate" id="AvailableFromDate"/></p>
+                <p>Available to date <input type="date" name="AvailableToDate" id="AvailableToDate"/></p>
+                <p>Fuel? @Html.CheckBox("EmployerProvidesFuel")</p>
+
+                <p>Fuel available from date <input type="date" name="FuelAvailableFromDate" id="FuelAvailableFromDate"/></p>
+                <p>Fuel available to date <input type="date" name="FuelAvailableToDate" id="FuelAvailableToDate"/></p>
+                <p>
+                    <input type="button" value="Save" id="SaveEmployeeCars"/>
+                </p>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        (function () {
+            $('input#SavePrivateMedical').click(function () {
+                $.ajax({
+                    url: '@Ajax.JavaScriptStringEncode(Url.Action("Add"))',
+                    type: 'POST',
+                    data: GetPrivateMedicalJsonData($('div#Editor')),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () { window.location.href = '@Url.Action("Index")'; }
+                });
+            });
+            $('input#SaveCars').click(function () {
+                $.ajax({
+                    url: '@Ajax.JavaScriptStringEncode(Url.Action("Add"))',
+                    type: 'POST',
+                    data: GetCarsJsonData($('div#CarEditor')),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () { window.location.href = '@Url.Action("Index")'; }
+                });
+            });
+            $('input#SaveEmployeePrivateMedical').click(function () {
+                $.ajax({
+                    url: '@Ajax.JavaScriptStringEncode(Url.Action("AddEmployee"))',
+                    type: 'POST',
+                    data: GetEmployeePrivateMedicalJsonData($('div#EmployeeEditor')),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () { window.location.href = '@Url.Action("Index")'; }
+                });
+            });
+            $('input#SaveEmployeeCars').click(function () {
+                $.ajax({
+                    url: '@Ajax.JavaScriptStringEncode(Url.Action("AddEmployee"))',
+                    type: 'POST',
+                    data: GetEmployeeCarsJsonData($('div#EmployeeCarEditor')),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () { window.location.href = '@Url.Action("Index")'; }
+                });
+            });
+        })();
+    
+        function GetPrivateMedicalJsonData($container) {
+             return JSON.stringify({
+                 'Type': 'PrivateMedical',
+                 'Name': $container.find('input#Name').val() || null,
+                 'AmountForegone': $container.find('input#AmountForegone').val()
+             });
+         }
+    
+        function GetCarsJsonData($container) {
+             return JSON.stringify({
+                 'Type': 'CarsAndCarFuel',
+                 'Name': $container.find('input#Name').val() || null,
+                 'Registration': $container.find('input#Registration').val() || null,
+                 'ListPrice': $container.find('input#ListPrice').val()
+             });
+         }
+    
+        function GetEmployeePrivateMedicalJsonData($container) {
+             return JSON.stringify({
+                 'Type': 'PrivateMedical',
+                 'BenefitCategoryId': $container.find('select#BenefitCategoryId').val(),
+                 'AmountForegone': $container.find('input#AmountForegone').val(),
+                 'AmountMadeGood': $container.find('input#AmountMadeGood').val()
+             });
+         }
+    
+        function GetEmployeeCarsJsonData($container) {
+             let employerProvidesFuel = $container.find('input#EmployerProvidesFuel').is(":checked");
+             return JSON.stringify({
+                 'Type': 'CarsAndCarFuel',
+                 'BenefitCategoryId': $container.find('select#BenefitCategoryId').val(),
+                 'AvailableFromDate': $container.find('input#AvailableFromDate').val() || null,
+                 'AvailableToDate': $container.find('input#AvailableToDate').val() || null,
+                 'EmployerProvidesFuel': employerProvidesFuel,
+                 'Fuel': employerProvidesFuel ? GetEmployeeFuelJsonData($container) : null
+             });
+         }
+    
+        function GetEmployeeFuelJsonData($container) {
+             return {
+                 'AvailableFromDate': $container.find('input#FuelAvailableFromDate').val() || null,
+                 'AvailableToDate': $container.find('input#FuelAvailableToDate').val() || null,
+             };
+         }
+    </script>
+}

@@ -1,0 +1,6 @@
+C:\Projects\InheritancePattern\Domain\bin\Debug\Domain.dll
+C:\Projects\InheritancePattern\Domain\bin\Debug\Domain.pdb
+C:\Projects\InheritancePattern\Domain\obj\Debug\Domain.csprojAssemblyReference.cache
+C:\Projects\InheritancePattern\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
+C:\Projects\InheritancePattern\Domain\obj\Debug\Domain.dll
+C:\Projects\InheritancePattern\Domain\obj\Debug\Domain.pdb
