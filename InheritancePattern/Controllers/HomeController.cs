@@ -89,16 +89,6 @@ namespace InheritancePattern.Controllers
 
                     employeeBenefitCategory.BenefitCategory = benefitCategory;
 
-                    if (employeeBenefitCategory is CarFuelEmployeeBenefitCategory carFuelEmployeeBenefitCategory
-                        && model is CarFuelEmployeeBenefitCategoryAddModel carModel)
-                    {
-                        var existingCarEmployeeBenefitCategory = session.QueryOver<EmployeeBenefitCategory>()
-                            .Where(x => x.Id == carModel.CarEmployeeBenefitCategoryId)
-                            .SingleOrDefault<CarEmployeeBenefitCategory>();
-
-                        carFuelEmployeeBenefitCategory.Car = existingCarEmployeeBenefitCategory;
-                    }
-
                     if (employeeBenefitCategory is CarEmployeeBenefitCategory carEmployeeBenefitCategory && carEmployeeBenefitCategory.EmployerProvidesFuel)
                     {
                         carEmployeeBenefitCategory.Fuel.BenefitCategory = benefitCategory;
